@@ -3,7 +3,7 @@
 ## CPU
 function CPU_Tweaking {
     normal_1; echo "Optimizing CPU"; normal_2
-    apt-get -qqy install tuned
+    DEBIAN_FRONTEND=noninteractive apt-get -qqy install tuned
     warn_2
     mkdir /etc/tuned/profile
     touch /etc/tuned/profile/tuned.conf
@@ -42,7 +42,7 @@ function NIC_Tweaking {
 function Network_Other_Tweaking {
     normal_1; echo "Doing other Network Tweaking"; warn_2
     #Other 1
-    apt-get -qqy install net-tools
+    DEBIAN_FRONTEND=noninteractive apt-get -qqy install net-tools
     ifconfig $interface txqueuelen 10000
     sleep 1
     #Other 2
@@ -469,12 +469,12 @@ function Tweaked_BBR {
     distro_codename="$(source /etc/os-release && printf "%s" "${VERSION_CODENAME}")"
     if [[ $distro_codename = buster ]]; then
     echo "deb http://deb.debian.org/debian buster-backports main" | sudo tee -a /etc/apt/sources.list
-    apt-get -qqy update && apt -qqyt buster-backports upgrade
+    DEBIAN_FRONTEND=noninteractive apt-get -qqy update && apt -qqyt buster-backports upgrade
     elif [[ $distro_codename = bullseye ]]; then
     echo "deb http://deb.debian.org/debian bullseye-backports main" | sudo tee -a /etc/apt/sources.list
-    apt-get -qqy update && apt -qqyt bullseye-backports upgrade
+    DEBIAN_FRONTEND=noninteractive apt-get -qqy update && apt -qqyt bullseye-backports upgrade
     fi
-    wget https://raw.githubusercontent.com/jerry048/Seedbox-Components/main/Miscellaneous/BBR/BBR.sh && chmod +x BBR.sh
+    wget https://raw.githubusercontent.com/iudashanpao/Seedbox-Components/main/Miscellaneous/BBR/BBR.sh && chmod +x BBR.sh
     ## Install tweaked BBR automatically on reboot
     cat << EOF > /etc/systemd/system/bbrinstall.service
 [Unit]

@@ -4,8 +4,8 @@
 function Update {
     normal_1; echo "Updating installed packages and install prerequisite"
     normal_2
-    apt-get -qqy update && apt-get -qqy upgrade
-    apt-get -qqy install sudo sysstat htop curl psmisc
+    DEBIAN_FRONTEND=noninteractive apt-get -qqy update && DEBIAN_FRONTEND=noninteractive apt-get -qqy upgrade
+    DEBIAN_FRONTEND=noninteractive apt-get -qqy install sudo sysstat htop curl psmisc
     cd $HOME
     tput sgr0; clear
 }
@@ -13,7 +13,7 @@ function Update {
 ## qBittorrent
 function qBittorrent {
     warn_2
-    source <(wget -qO- https://raw.githubusercontent.com/jerry048/Seedbox-Components/main/Torrent%20Clients/qBittorrent/qBittorrent_install.sh)
+    source <(wget -qO- https://raw.githubusercontent.com/iudashanpao/Seedbox-Components/main/Torrent%20Clients/qBittorrent/qBittorrent_install.sh)
     qBittorrent_download
     qBittorrent_install
     qBittorrent_config
@@ -24,7 +24,7 @@ function qBittorrent {
 ## Deluge
 function Deluge {
     warn_2
-    source <(wget -qO- https://raw.githubusercontent.com/jerry048/Seedbox-Components/main/Torrent%20Clients/Deluge/Deluge_install.sh)
+    source <(wget -qO- https://raw.githubusercontent.com/iudashanpao/Seedbox-Components/main/Torrent%20Clients/Deluge/Deluge_install.sh)
     Deluge_download
     Deluge_install
     Deluge_config
@@ -45,8 +45,8 @@ function Decision2 {
 }
 function autoremove-torrents {
     normal_2
-    apt-get -qqy install python3-distutils python3-apt
-    [[ $(pip --version) ]] || (apt-get -qqy install curl && curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py && python3 get-pip.py && rm get-pip.py )
+    DEBIAN_FRONTEND=noninteractive apt-get -qqy install python3-distutils python3-apt
+    [[ $(pip --version) ]] || (DEBIAN_FRONTEND=noninteractive apt-get -qqy install curl && curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py && python3 get-pip.py && rm get-pip.py )
     pip -q install autoremove-torrents
     tput sgr0; clear
     need_input
@@ -119,6 +119,6 @@ done
 EOF
     chmod +x $HOME/.autoremove.sh
     normal_2
-    apt-get -qqy install screen
+    DEBIAN_FRONTEND=noninteractive apt-get -qqy install screen
     screen -dmS autoremove-torrents $HOME/.autoremove.sh
 }

@@ -4,14 +4,14 @@ sleep 60s
 cd $HOME
 
 ## This part of the script is modified from https://github.com/KozakaiAya/TCP_BBR
-apt-get -qqy install dkms
-apt-get -qqy install linux-headers-$(uname -r)
+DEBIAN_FRONTEND=noninteractive apt-get -qqy install dkms
+DEBIAN_FRONTEND=noninteractive apt-get -qqy install linux-headers-$(uname -r)
 distro_codename="$(source /etc/os-release && printf "%s" "${VERSION_CODENAME}")"
 if [[ $distro_codename = buster ]]; then
-    wget https://raw.githubusercontent.com/jerry048/Seedbox-Components/main/Miscellaneous/BBR/5.10.0/tcp_bbrx.c
+    wget https://raw.githubusercontent.com/iudashanpao/Seedbox-Components/main/Miscellaneous/BBR/5.10.0/tcp_bbrx.c
     kernel_ver=5.10.0
 elif [[ $distro_codename = bullseye ]] ; then
-    wget https://raw.githubusercontent.com/jerry048/Seedbox-Components/main/Miscellaneous/BBR/5.15.0/tcp_bbrx.c
+    wget https://raw.githubusercontent.com/iudashanpao/Seedbox-Components/main/Miscellaneous/BBR/5.15.0/tcp_bbrx.c
     kernel_ver=5.15.0
 fi
 algo=bbrx
